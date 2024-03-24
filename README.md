@@ -1,2 +1,3 @@
 # timeflux-mnelsl
- A Timeflux plugin for MNE-LSL
+
+A Timeflux plugin for MNE-LSL

@@ -1,0 +1,76 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[project]
+authors = [{ name = "Richard M. Köhler" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
+]
+description = "An open-source software package for statistics with time series."
+dynamic = ["version"]
+keywords = ["timeflux", "mne", "lsl"]
+license = { file = "LICENSE" }
+maintainers = [{ name = "Richard M. Köhler" }]
+name = "timeflux_mnelsl"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.10"
+
+dependencies = ["pandas", "numpy", "mne-lsl", "timeflux"]
+[project.urls]
+bugtracker = "https://github.com/richardkoehler/timeflux-mnelsl/issues"
+changelog = "https://github.com/richardkoehler/timeflux-mnelsl/blob/main/docs/CHANGELOG.md"
+repository = "https://github.com/richardkoehler/timeflux-mnelsl"
+
+[tool]
+rye = { dev-dependencies = [
+    "black>=24.3.0",
+    "ruff>=0.3.4",
+    "pytest>=8.1.1",
+    "pre-commit>=3.6.2",
+    "mypy>=1.9.0",
+    "pandas-stubs>=2.2.1.240316",
+] }
+
+[tool.black]
+line-length = 100
+
+[tool.hatch]
+version.path = "src/timeflux_mnelsl/__init__.py"
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = ["mne_lsl.*", "numpy", "timeflux.*"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
