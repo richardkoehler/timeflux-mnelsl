@@ -45,6 +45,7 @@ rye = { dev-dependencies = [
 
 [tool.black]
 line-length = 100
+extend-include = ["tests/"]
 
 [tool.hatch]
 version.path = "src/timeflux_mnelsl/__init__.py"
@@ -55,6 +56,7 @@ module = ["mne_lsl.*", "numpy", "timeflux.*"]
 
 [tool.ruff]
 line-length = 100
+extend-include = ["tests/"]
 
 [tool.ruff.lint]
 select = [
