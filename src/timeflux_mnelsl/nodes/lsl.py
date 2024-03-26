@@ -37,21 +37,7 @@ class Send(Node):
         source (string, None): The unique identifier for the stream. If ``None``, it will be
             auto-generated. Default is ``None``.
         config_path (string, None): Optional path to an LSL config file. Default is ``None``.
-
-    Example:
-        .. literalinclude:: /../examples/lsl.yaml
-           :language: yaml
     """
-
-    _dtypes = {
-        "float32": np.number,
-        "float64": np.number,
-        "int8": np.number,
-        "int16": np.number,
-        "int32": np.number,
-        "int64": np.number,
-        "string": object,
-    }
 
     def __init__(
         self,
@@ -64,13 +50,13 @@ class Send(Node):
         source: str | None = None,
         config_path: str | None = None,
     ) -> None:
-        if not source:
-            source = str(uuid.uuid4())
         self._name = name
         self._type = type
-        self._include: list = [self._dtypes[format]]
+        self._include: list = [object if format != "string" else np.number]
         self._format = format
         self._rate = rate
+        if not source:
+            source = str(uuid.uuid4())
         self._source = source
         self._outlet: mne_lsl.lsl.StreamOutlet | None = None
         if config_path is not None:
@@ -104,25 +90,22 @@ class Receive(Node):
         o (Port): Default output, provides DataFrame and meta.
 
     Args:
-        prop (string): The property to look for during stream resolution (e.g., ``name``, ``type``,
-            ``source_id``).
-        value (string): The value that the property should have (e.g., ``EEG`` for the type
+        prop (string): The property to look for during stream resolution. One of ``name``, ``type``,
+            ``stype`` (type and stype are equal) or ``source_id``. Preferably use ``source_id``.
+        value (string): The value that the property should have (e.g., ``EEG`` for the ``type``
             property).
         timeout (float): The resolution timeout, in seconds.
         channels (list, None): Override the channel names. If ``None``, the names defined in the LSL
             stream will be used.
-        max_samples (int): The maximum number of samples to return per call.
-        clocksync (bool): Perform automatic clock synchronization.
+        max_samples (int): The maximum number of samples to return per call. Default is 1024.
+        clocksync (bool): Perform automatic clock synchronization if the stream has a LSL timestamp
+            and not a Timeflux timestamp. Default is ``True``.
         dejitter (bool): Remove jitter from timestamps using a smoothing algorithm to the received
-            timestamps.
+            timestamps. Default is ``False``.
         monotonize (bool): Force the timestamps to be monotonically ascending. Only makes sense if
-            timestamps are dejittered.
-        threadsafe (bool): Same inlet can be read from by multiple threads.
-        config_path (string, None): The path to an LSL config file.
-
-    Example:
-        .. literalinclude:: /../examples/lsl_multiple.yaml
-           :language: yaml
+            timestamps are dejittered. Default is ``False``.
+        threadsafe (bool): Same inlet can be read from by multiple threads. Default is ``True``.
+        config_path (string, None): Optional path to an LSL config file. Default is ``None``.
 
     """
 
