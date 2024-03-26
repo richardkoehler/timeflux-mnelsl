@@ -30,7 +30,7 @@ requires-python = ">=3.10"
 dependencies = ["pandas", "numpy", "mne-lsl", "timeflux"]
 
 [project.optional-dependencies]
-dev = ["black", "ruff", "pytest", "pre-commit", "mypy", "pandas-stubs"]
+dev = ["black", "ruff", "pytest", "pre-commit", "mypy", "pandas-stubs", "build"]
 
 [project.urls]
 bugtracker = "https://github.com/richardkoehler/timeflux-mnelsl/issues"
