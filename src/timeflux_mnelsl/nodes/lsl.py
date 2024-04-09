@@ -52,7 +52,7 @@ class Send(Node):
     ) -> None:
         self._name = name
         self._type = type
-        self._include: list = [object if format != "string" else np.number]
+        self._include: list = [object if format == "string" else np.number]
         self._format = format
         self._rate = rate
         if not source:
@@ -66,7 +66,7 @@ class Send(Node):
         if isinstance(self.i.data, pd.core.frame.DataFrame):
             data: pd.DataFrame = self.i.data.select_dtypes(include=self._include)
             if self._outlet is None:
-                labels: list[str] = data.columns.tolist()
+                labels: list[str] = [str(col) for col in data.columns]
                 sinfo = mne_lsl.lsl.StreamInfo(
                     name=self._name,
                     stype=self._type,
