@@ -25,7 +25,7 @@ license = { file = "LICENSE" }
 maintainers = [{ name = "Richard M. Köhler" }]
 name = "timeflux_mnelsl"
 readme = { file = "README.md", content-type = "text/markdown" }
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 
 dependencies = ["pandas", "numpy", "mne-lsl", "timeflux"]
 
